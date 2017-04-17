@@ -1,5 +1,30 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'network-request-dispatcher'
+
+    publishedGroupId = 'com.tomergoldst.android'
+    libraryName = 'NetworkRequestDispatcher'
+    artifact = 'networkrequestdispatcher'
+
+    libraryDescription = 'Simple android library for dispatching network requests with retry policy'
+
+    siteUrl = 'https://github.com/tomergoldst/network-request-dispatcher'
+    gitUrl = 'https://github.com/tomergoldst/network-request-dispatcher.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'tomergoldst'
+    developerName = 'Tomer Goldstein'
+    developerEmail = 'tomergoldst2@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -29,3 +54,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
