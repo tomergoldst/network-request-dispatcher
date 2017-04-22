@@ -49,9 +49,9 @@ public class RequestResponse {
     @Override
     public String toString() {
         return "RequestResponse{" +
-                "mResponseCode=" + mResponseCode +
-                ", mResponseMessage='" + mResponseMessage + '\'' +
-                ", mResponseBody='" + mResponseBody + '\'' +
+                "responseCode=" + mResponseCode +
+                ", responseMessage='" + mResponseMessage + '\'' +
+                ", responseBody='" + mResponseBody + '\'' +
                 '}';
     }
 

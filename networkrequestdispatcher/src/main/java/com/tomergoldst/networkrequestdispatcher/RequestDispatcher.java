@@ -27,17 +27,31 @@ public class RequestDispatcher {
     private static final String PARAMS_ENCODER_DECODER = "UTF-8";
 
     public static RequestResponse dispatch(Request request) {
-        return dispatch(request, new RequestRetryPolicy());
+        return dispatch(request, new RequestRetryPolicy(), true);
     }
 
-    public static RequestResponse dispatch(Request request, RetryPolicy retryPolicy){
+    public static RequestResponse dispatch(Request request, boolean showLogs) {
+        return dispatch(request, new RequestRetryPolicy(), showLogs);
+    }
+
+    public static RequestResponse dispatch(Request request, RetryPolicy retryPolicy,
+                                           boolean showLogs){
         RequestResponse requestResponse = new RequestResponse();
 
         while (retryPolicy.hasAnotherAttempt() && !requestResponse.hasResponse()){
             try {
-                Log.i(TAG, retryPolicy.toString());
+                if (showLogs){
+                    Log.i(TAG, retryPolicy.toString());
+                }
+
                 requestResponse = connect(request, retryPolicy);
+
+                if (showLogs) {
+                    Log.i(TAG, requestResponse.toString());
+                }
+
                 retryPolicy.retry();
+
             } catch (IOException e) {
                 Log.w(TAG, "Request failed, " + requestResponse.toString());
                 retryPolicy.retry();
