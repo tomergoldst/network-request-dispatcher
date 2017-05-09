@@ -41,6 +41,7 @@ public class RequestDispatcher {
         while (retryPolicy.hasAnotherAttempt() && !requestResponse.hasResponse()){
             try {
                 if (showLogs){
+                    Log.i(TAG, request.toString());
                     Log.i(TAG, retryPolicy.toString());
                 }
 
