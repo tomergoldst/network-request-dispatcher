@@ -61,12 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class MakeNetworkRequestAsync extends AsyncTask<Request, Void, Void> {
         protected Void doInBackground(Request... requests) {
-            RequestResponse response = RequestDispatcher.dispatch(requests[0]);
-            if (response.hasResponse()){
-                if(requests[0].getListener() != null){
-                    requests[0].getListener().onResponse(getBaseContext(), response);
-                }
-            }
+            RequestResponse response = RequestDispatcher.dispatch(getBaseContext(), requests[0]);
             Log.d("MainActivity", response.toString());
             return null;
         }

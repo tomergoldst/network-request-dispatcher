@@ -1,5 +1,6 @@
 package com.tomergoldst.networkrequestdispatcher;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
@@ -26,15 +27,17 @@ public class RequestDispatcher {
 
     private static final String PARAMS_ENCODER_DECODER = "UTF-8";
 
-    public static RequestResponse dispatch(Request request) {
-        return dispatch(request, new RequestRetryPolicy(), true);
+    public static RequestResponse dispatch(Context context, Request request) {
+        return dispatch(context, request, new RequestRetryPolicy(), true);
     }
 
-    public static RequestResponse dispatch(Request request, boolean showLogs) {
-        return dispatch(request, new RequestRetryPolicy(), showLogs);
+    public static RequestResponse dispatch(Context context, Request request, boolean showLogs) {
+        return dispatch(context, request, new RequestRetryPolicy(), showLogs);
     }
 
-    public static RequestResponse dispatch(Request request, RetryPolicy retryPolicy,
+    public static RequestResponse dispatch(Context context,
+                                           Request request,
+                                           RetryPolicy retryPolicy,
                                            boolean showLogs){
         RequestResponse requestResponse = new RequestResponse();
 
@@ -58,6 +61,15 @@ public class RequestDispatcher {
                 retryPolicy.retry();
             }
         }
+
+        if (request.getListener() != null){
+            if (requestResponse.hasResponse()){
+                request.getListener().onResponse(context, requestResponse);
+            } else {
+                request.getListener().onErrorResponse(context, requestResponse);
+            }
+        }
+
         return requestResponse;
     }
 
