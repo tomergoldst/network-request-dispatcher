@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     .data(jsonObject)
                     .addHeader("charset", "UTF-8")
                     .addHeader("Content-Type", "Application/JSON")
+                    .listener(new DemoRequestListener())
                     .build();
         Log.d("MainActivity", request.toString());
 
@@ -61,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
     private class MakeNetworkRequestAsync extends AsyncTask<Request, Void, Void> {
         protected Void doInBackground(Request... requests) {
             RequestResponse response = RequestDispatcher.dispatch(requests[0]);
+            if (response.hasResponse()){
+                if(requests[0].getListener() != null){
+                    requests[0].getListener().onResponse(getBaseContext(), response);
+                }
+            }
             Log.d("MainActivity", response.toString());
             return null;
         }

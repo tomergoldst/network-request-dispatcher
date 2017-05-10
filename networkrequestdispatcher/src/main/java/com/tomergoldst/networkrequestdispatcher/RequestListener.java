@@ -7,6 +7,6 @@ import android.content.Context;
  */
 
 public interface RequestListener {
-    void onResponse(Context context, RequestResponse response);
-    void onErrorResponse(Context context, RequestResponse response);
+    boolean onResponse(Context context, RequestResponse response);
+    boolean onErrorResponse(Context context, RequestResponse response);
 }
