@@ -35,11 +35,8 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonObject = createJsonObject();
 
         Request request = new Request.Builder()
-                    .url("https://httpbin.org/post")
-                    .method("POST")
-                    .data(jsonObject)
-                    .addHeader("charset", "UTF-8")
-                    .addHeader("Content-Type", "Application/JSON")
+                    .url("https://httpbin.org/get")
+                    .method("GET")
                     .listener(new DemoRequestListener())
                     .build();
         Log.d("MainActivity", request.toString());
