@@ -112,10 +112,6 @@ public class RequestDispatcher {
                 conn.setDoOutput(true);
                 conn.setChunkedStreamingMode(0);
 
-                // Send request
-//                DataOutputStream wr = new DataOutputStream(
-//                        conn.getOutputStream());
-//                wr.writeBytes(parameters);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "utf-8"));
                 bw.write(parameters);
                 bw.flush();
