@@ -11,10 +11,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.List;
 
 /**
@@ -137,16 +135,9 @@ public class RequestDispatcher {
             // Convert the InputStream into a string
             String contentAsString = readIt(is);
 
-            String decodedContent = null;
-            try {
-                decodedContent = URLDecoder.decode(contentAsString, PARAMS_ENCODER_DECODER);
-            } catch (UnsupportedEncodingException e) {
-                decodedContent = contentAsString;
-            }
-
             String responseMessage = conn.getResponseMessage();
 
-            return new RequestResponse(responseCode, responseMessage, decodedContent);
+            return new RequestResponse(responseCode, responseMessage, contentAsString);
 
         } finally {
             // Makes sure that the InputStream is closed after the app is
