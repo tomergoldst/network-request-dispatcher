@@ -6,11 +6,10 @@ import android.support.v4.util.Pair;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -24,8 +23,6 @@ import java.util.List;
 public class RequestDispatcher {
 
     private static final String TAG = RequestDispatcher.class.getSimpleName();
-
-    private static final String PARAMS_ENCODER_DECODER = "UTF-8";
 
     public static RequestResponse dispatch(Context context, Request request) {
         return dispatch(context, request, new RequestRetryPolicy(), true);
@@ -132,12 +129,19 @@ public class RequestDispatcher {
                 is = conn.getInputStream();
             }
 
-            // Convert the InputStream into a string
-            String contentAsString = readIt(is);
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[1024];
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+
+            buffer.flush();
+            byte[] byteArray = buffer.toByteArray();
 
             String responseMessage = conn.getResponseMessage();
 
-            return new RequestResponse(responseCode, responseMessage, contentAsString);
+            return new RequestResponse(responseCode, responseMessage, byteArray);
 
         } finally {
             // Makes sure that the InputStream is closed after the app is
@@ -148,17 +152,5 @@ public class RequestDispatcher {
         }
     }
 
-    // Reads an InputStream and converts it to a String.
-    private static String readIt(InputStream stream) throws IOException {
-        BufferedReader streamReader = new BufferedReader(new InputStreamReader(stream,
-                PARAMS_ENCODER_DECODER));
-        StringBuilder responseStrBuilder = new StringBuilder();
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-            responseStrBuilder.append(inputStr);
-        }
-
-        return responseStrBuilder.toString();
-    }
 
 }

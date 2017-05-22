@@ -4,34 +4,53 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 
 /**
  * Created by Tomer on 16/04/2017.
  */
 public class RequestResponse {
-    private int mResponseCode;
-    private String mResponseMessage;
-    private String mResponseBody;
+
+    private static final String CHARSET_NAME = "UTF-8";
+
+    private final int mResponseCode;
+    private final String mResponseMessage;
+    private final byte[] mResponseByteArray;
 
     RequestResponse(){
         mResponseCode = 0;
         mResponseMessage = null;
-        mResponseBody = null;
+        mResponseByteArray = null;
     }
 
-    RequestResponse(int responseCode, String responseMessage, String responseBody){
+    RequestResponse(final int responseCode,
+                    final String responseMessage,
+                    final byte[] responseStream){
         this.mResponseCode = responseCode;
         this.mResponseMessage = responseMessage;
-        this.mResponseBody = responseBody;
+        this.mResponseByteArray = responseStream;
     }
 
     public int getResponseCode(){
         return mResponseCode;
     }
 
+    public byte[] getResponseByteArray() {
+        return mResponseByteArray;
+    }
+
     public String getResponseBody(){
-        return mResponseBody;
+        if (mResponseByteArray != null) {
+            try {
+                return readIt(mResponseByteArray);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
     }
 
     public String getResponseMessage() {
@@ -51,20 +70,39 @@ public class RequestResponse {
         return "RequestResponse{" +
                 "responseCode=" + mResponseCode +
                 ", responseMessage='" + mResponseMessage + '\'' +
-                ", responseBody='" + mResponseBody + '\'' +
+                ", responseBody='" + getResponseBody() + '\'' +
                 '}';
     }
 
     public JSONObject toJsonObject() throws JSONException{
-        JSONObject jsonObject;
-        jsonObject = new JSONObject(mResponseBody);
-        return jsonObject;
+        try {
+            String responseBody = readIt(mResponseByteArray);
+            JSONObject jsonObject;
+            jsonObject = new JSONObject(responseBody);
+            return jsonObject;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public JSONArray toJsonArray() throws JSONException{
-        JSONArray jsonArray;
-        jsonArray = new JSONArray(mResponseBody);
-        return jsonArray;
+        try {
+            String responseBody = readIt(mResponseByteArray);
+            JSONArray jsonArray;
+            jsonArray = new JSONArray(responseBody);
+            return jsonArray;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // Reads an InputStream and converts it to a String.
+    private static String readIt(byte[] bytes) throws UnsupportedEncodingException {
+        return new String(bytes, CHARSET_NAME);
     }
 
 }
