@@ -96,8 +96,8 @@ public class RequestDispatcher {
             }
 
             String parameters = null;
-            if (request.getData() != null){
-                parameters = request.getData().toString();
+            if (!TextUtils.isEmpty(request.getData())){
+                parameters = request.getData();
             } else if (request.getParams() != null && !request.getParams().isEmpty()){
                 parameters = request.getParamsAsString();
             }

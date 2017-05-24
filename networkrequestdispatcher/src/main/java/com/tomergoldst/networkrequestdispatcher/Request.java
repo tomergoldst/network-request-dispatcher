@@ -2,6 +2,7 @@ package com.tomergoldst.networkrequestdispatcher;
 
 import android.support.v4.util.Pair;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Request {
     private String mMethod;
     private List<Pair<String, String>> mHeaders;
     private List<Pair<String, String>> mParams;
-    private JSONObject mData;
+    private String mData;
     private RequestListener mListener;
 
     public Request(Builder builder){
@@ -59,7 +60,7 @@ public class Request {
         return mParams;
     }
 
-    public JSONObject getData() {
+    public String getData() {
         return mData;
     }
 
@@ -84,7 +85,7 @@ public class Request {
         private String method;
         private List<Pair<String, String>> headers;
         private List<Pair<String, String>> params;
-        private JSONObject data;
+        private String data;
         private RequestListener listener;
 
         public Builder(){
@@ -112,8 +113,13 @@ public class Request {
             return this;
         }
 
-        public Builder data(JSONObject data){
-            this.data = data;
+        public Builder data(JSONObject jsonObject){
+            this.data = jsonObject.toString();
+            return this;
+        }
+
+        public Builder data(JSONArray jsonArray){
+            this.data = jsonArray.toString();
             return this;
         }
 
