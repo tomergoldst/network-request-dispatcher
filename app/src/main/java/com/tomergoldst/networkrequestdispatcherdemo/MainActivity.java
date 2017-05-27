@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
                     .method("GET")
                     .listener(new DemoRequestListener())
                     .build();
-        Log.d("MainActivity", request.toString());
 
         new MakeNetworkRequestAsync().execute(request);
     }
@@ -59,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private class MakeNetworkRequestAsync extends AsyncTask<Request, Void, Void> {
         protected Void doInBackground(Request... requests) {
             RequestResponse response = RequestDispatcher.dispatch(getBaseContext(), requests[0]);
-            Log.d("MainActivity", response.toString());
             return null;
         }
 
