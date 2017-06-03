@@ -15,10 +15,11 @@ public class DemoRequestListener extends BaseRequestListener{
 
     @Override
     public boolean onResponse(Context context, RequestResponse response) {
-        boolean requestHandled = super.onResponse(context, response);
-        if (!requestHandled) {
-            Log.d(TAG, "onResponse");
+        if (super.onResponse(context, response)) {
+            return true;
         }
+
+        Log.d(TAG, "onResponse");
         return true;
     }
 

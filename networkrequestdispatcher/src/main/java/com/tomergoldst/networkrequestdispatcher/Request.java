@@ -108,8 +108,18 @@ public class Request {
             return this;
         }
 
+        public Builder addHeaders(List<Pair<String, String>> headers){
+            this.headers.addAll(headers);
+            return this;
+        }
+
         public Builder addParameter(String key, String value){
             params.add(Pair.create(key, value));
+            return this;
+        }
+
+        public Builder addParameters(List<Pair<String, String>> parameters){
+            params.addAll(parameters);
             return this;
         }
 

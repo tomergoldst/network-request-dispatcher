@@ -17,7 +17,7 @@ public class BaseRequestListener implements RequestListener{
     @Override
     public boolean onResponse(Context context, RequestResponse response) {
         Log.d(TAG, "onResponse");
-        return true;
+        return false;
     }
 
     @Override
