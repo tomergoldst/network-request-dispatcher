@@ -47,7 +47,7 @@ public class RequestDispatcher {
                 requestResponse = connect(request, retryPolicy);
 
                 if (showLogs) {
-                    Log.i(TAG, request.toString() + " " + requestResponse.toString());
+                    Log.i(TAG, requestResponse.toString() + " for " + request.toString());
                 }
 
                 retryPolicy.retry();
@@ -140,7 +140,7 @@ public class RequestDispatcher {
 
             String responseMessage = conn.getResponseMessage();
 
-            return new RequestResponse(responseCode, responseMessage, byteArray);
+            return new RequestResponse(responseCode, responseMessage, byteArray, request);
 
         } finally {
             // Makes sure that the InputStream is closed after the app is

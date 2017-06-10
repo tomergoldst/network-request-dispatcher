@@ -18,19 +18,23 @@ public class RequestResponse {
     private final int mResponseCode;
     private final String mResponseMessage;
     private final byte[] mResponseByteArray;
+    private final Request mRequest;
 
     RequestResponse(){
         mResponseCode = 0;
         mResponseMessage = null;
         mResponseByteArray = null;
+        mRequest = null;
     }
 
     RequestResponse(final int responseCode,
                     final String responseMessage,
-                    final byte[] responseStream){
+                    final byte[] responseStream,
+                    final Request request){
         this.mResponseCode = responseCode;
         this.mResponseMessage = responseMessage;
         this.mResponseByteArray = responseStream;
+        this.mRequest = request;
     }
 
     public int getResponseCode(){
@@ -63,6 +67,10 @@ public class RequestResponse {
 
     public boolean hasResponse(){
         return mResponseCode > 0;
+    }
+
+    public Request getRequest(){
+        return mRequest;
     }
 
     @Override
