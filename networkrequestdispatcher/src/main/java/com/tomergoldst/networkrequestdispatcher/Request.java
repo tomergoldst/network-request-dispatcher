@@ -1,6 +1,6 @@
 package com.tomergoldst.networkrequestdispatcher;
 
-import android.support.v4.util.Pair;
+import android.util.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

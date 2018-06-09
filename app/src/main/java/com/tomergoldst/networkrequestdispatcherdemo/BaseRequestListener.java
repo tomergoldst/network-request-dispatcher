@@ -10,7 +10,7 @@ import com.tomergoldst.networkrequestdispatcher.RequestResponse;
  * Created by Tomer on 10/05/2017.
  */
 
-public class BaseRequestListener implements RequestListener{
+public class BaseRequestListener implements RequestListener {
 
     private static final String TAG = BaseRequestListener.class.getSimpleName();
 

@@ -62,6 +62,10 @@ public class RequestResponse {
     }
 
     public boolean isSuccessful(){
+        return mResponseCode >= 200 && mResponseCode <= 299;
+    }
+
+    public boolean isStatusCodeOk(){
         return mResponseCode == HttpURLConnection.HTTP_OK;
     }
 

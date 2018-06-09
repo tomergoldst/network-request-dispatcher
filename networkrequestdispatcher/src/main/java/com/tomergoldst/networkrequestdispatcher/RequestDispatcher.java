@@ -2,9 +2,9 @@ package com.tomergoldst.networkrequestdispatcher;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -74,11 +74,12 @@ public class RequestDispatcher {
     private static RequestResponse connect(Request request,
                                     RetryPolicy retryPolicy) throws IOException {
         InputStream is = null;
+        HttpURLConnection conn = null;
 
         try {
             // Create connection
             URL url = new URL(request.getUrl());
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(retryPolicy.getReadTimeout());
             conn.setConnectTimeout(retryPolicy.getTimeout());
             conn.setRequestMethod(request.getMethod());
@@ -147,6 +148,9 @@ public class RequestDispatcher {
             // finished using it.
             if (is != null) {
                 is.close();
+            }
+            if (conn != null) {
+                conn.disconnect();
             }
         }
     }
