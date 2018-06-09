@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/tomergoldst/network-request-dispatcher'
     gitUrl = 'https://github.com/tomergoldst/network-request-dispatcher.git'
 
-    libraryVersion = '1.0.12'
+    libraryVersion = '1.1.0'
 
     developerId = 'tomergoldst'
     developerName = 'Tomer Goldstein'
@@ -31,8 +31,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 13
-        versionName "1.0.12"
+        versionCode 14
+        versionName "1.1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
